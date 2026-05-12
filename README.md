@@ -49,8 +49,8 @@ nmap --version
 ### Install
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/Vulnerability-Scanner-Personalizado.git
-cd Vulnerability-Scanner-Personalizado
+git clone https://github.com/M4H0R4G4/vulnscanner.git
+cd vulnscanner
 pip install -r requirements.txt
 ```
 
