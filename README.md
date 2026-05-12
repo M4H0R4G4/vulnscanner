@@ -1,126 +1,214 @@
-# VulnScanner Personalizado
+# 🔍 VulnScanner
 
-VulnScanner Personalizado is a command-line vulnerability scanner for authorized security testing. It uses Nmap for port and service/version detection, queries the NVD API for related CVEs, and generates HTML and PDF reports.
+> **Vulnerability scanner** that identifies open ports, service versions, and known CVEs — with professional HTML and PDF reports.
 
-## Features
+![Python](https://img.shields.io/badge/Python-3.10+-blue?style=flat-square&logo=python)
+![License](https://img.shields.io/badge/License-MIT-green?style=flat-square)
+![NVD](https://img.shields.io/badge/Data-NVD%20API-orange?style=flat-square)
 
-- Port scanning with Nmap service/version detection.
-- Optional CVE lookup through the NVD API 2.0.
-- Parallel CVE queries for detected services.
-- Risk classification: `CRITICAL`, `HIGH`, `MEDIUM`, or `LOW`.
-- Self-contained HTML report.
-- PDF report generated with ReportLab.
-- CLI authorization confirmation before scanning.
-- Unit tests for core logic and report generation.
+---
 
-## Requirements
+## ✨ Features
 
-- Python 3.10 or newer.
-- Nmap installed on your system and available in `PATH`.
+- **Port scanning** via nmap with service/version detection (`-sV`)
+- **CVE lookup** via the [NVD API 2.0](https://nvd.nist.gov/developers/vulnerabilities) for each detected service
+- **Parallel CVE queries** using ThreadPoolExecutor
+- **HTML report** — self-contained, dark-themed, with severity badges
+- **PDF report** — professional layout with ReportLab, dark background
+- **Risk scoring** — automatic CRITICAL / HIGH / MEDIUM / LOW classification
+- **CLI interface** with authorization confirmation prompt
+- **Python package support** with `pyproject.toml`, `setup.py`, and `vulnscan` console command
 
-Windows users can install Nmap from:
+---
+
+## 🚀 Quick Start
+
+### Requirements
+
+- Python 3.10+
+- [nmap](https://nmap.org/download.html) installed on your system
+
+```bash
+# Install nmap (Debian/Ubuntu)
+sudo apt install nmap
+
+# Install nmap (macOS)
+brew install nmap
+```
+
+For Windows, download and install Nmap from:
 
 https://nmap.org/download.html
 
-After installation, open a new terminal and confirm:
+After installing, open a new terminal and confirm:
 
 ```bash
 nmap --version
 ```
 
-## Installation
+### Install
 
 ```bash
-git clone https://github.com/M4H0R4G4/Vulnerability-Scanner-Personalizado.git
+git clone https://github.com/YOUR_USERNAME/Vulnerability-Scanner-Personalizado.git
 cd Vulnerability-Scanner-Personalizado
-python -m pip install -r requirements.txt
+pip install -r requirements.txt
 ```
 
 Optional editable install:
 
 ```bash
-python -m pip install -e .
+pip install -e .
 ```
 
-After editable install, the CLI command is available as:
+### Run
 
 ```bash
-vulnscan scanme.nmap.org --no-cve
-```
-
-## Usage
-
-```bash
-# Basic scan, ports 1-1024
+# Basic scan (ports 1-1024)
 python main.py scanme.nmap.org
 
 # Custom port range
 python main.py 192.168.1.1 --ports 1-65535
 
-# Faster scan without CVE lookup
-python main.py 10.0.0.5 --format html --no-cve
+# PDF only, no CVE lookup (faster)
+python main.py 10.0.0.5 --format pdf --no-cve
 
-# Use an NVD API key for higher rate limits
-python main.py target.com --api-key YOUR_NVD_KEY --format both
+# HTML report with NVD API key (higher rate limits)
+python main.py target.com --api-key YOUR_KEY --format html
+
+# If installed with pip install -e .
+vulnscan scanme.nmap.org --no-cve
 ```
 
-You can also set the API key with an environment variable:
+---
 
-```bash
-set NVD_API_KEY=your-key-here
-```
+## 📋 CLI Options
 
-On Linux/macOS:
+| Option | Short | Default | Description |
+|--------|-------|---------|-------------|
+| `--ports` | `-p` | `1-1024` | Port range to scan |
+| `--format` | `-f` | `both` | `html`, `pdf`, or `both` |
+| `--output` | `-o` | auto | Custom output file path |
+| `--no-cve` | — | false | Skip NVD lookup (faster) |
+| `--api-key` | `-k` | env | NVD API key |
+| `--timeout` | `-t` | `60` | Nmap timeout (seconds) |
+| `--verbose` | `-v` | false | Debug logging |
+
+**Tip:** Set `NVD_API_KEY` as an environment variable to avoid passing it every time:
 
 ```bash
 export NVD_API_KEY="your-key-here"
 ```
 
-## CLI Options
+On Windows PowerShell:
 
-| Option | Short | Default | Description |
-| --- | --- | --- | --- |
-| `--ports` | `-p` | `1-1024` | Port range or list, such as `22,80,443` |
-| `--format` | `-f` | `both` | Report format: `html`, `pdf`, or `both` |
-| `--output` | `-o` | auto | Custom output path for single-format reports |
-| `--no-cve` | | false | Skip NVD CVE lookup |
-| `--api-key` | `-k` | `NVD_API_KEY` | NVD API key |
-| `--timeout` | `-t` | `60` | Nmap scan timeout in seconds |
-| `--verbose` | `-v` | false | Enable debug logging |
+```powershell
+$env:NVD_API_KEY="your-key-here"
+```
 
-## Project Structure
+Get a free key at: https://nvd.nist.gov/developers/request-an-api-key
+
+---
+
+## 🧪 Running Tests
+
+Install development dependencies:
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+Run the test suite:
+
+```bash
+pytest
+```
+
+Expected result:
+
+```text
+17 passed
+```
+
+---
+
+## 🗂️ Project Structure
 
 ```text
 Vulnerability-Scanner-Personalizado/
-├── main.py
-├── setup.py
-├── pyproject.toml
-├── requirements.txt
-├── requirements-dev.txt
-├── README.md
-├── LICENSE
-├── .gitignore
+├── main.py                    # CLI entrypoint
+├── setup.py                   # Package installation config
+├── pyproject.toml             # Modern build config
+├── requirements.txt           # Runtime dependencies
+├── requirements-dev.txt       # Test/development dependencies
+├── README.md                  # Documentation
+├── LICENSE                    # MIT license
+├── .gitignore                 # Ignores cache, reports, env files
 ├── scanner/
 │   ├── __init__.py
-│   ├── core.py
-│   ├── report_html.py
-│   └── report_pdf.py
+│   ├── core.py                # VulnScanner engine + NVD client
+│   ├── report_html.py         # HTML report generator
+│   └── report_pdf.py          # PDF report generator
+├── reports/                   # Generated reports (gitignored)
 └── tests/
     ├── __init__.py
-    └── test_core.py
+    └── test_core.py           # Unit tests
 ```
 
-## Running Tests
+---
 
-```bash
-python -m pip install -r requirements-dev.txt
-python -m pytest
+## 📊 Sample Report
+
+After scanning, reports are saved to the `reports/` folder:
+
+```text
+reports/
+├── scanme_nmap_org_20260511_143201.html
+└── scanme_nmap_org_20260511_143201.pdf
 ```
 
-## Legal Notice
+---
 
-Use this project only on systems you own or have explicit permission to test. Unauthorized scanning can be illegal.
+## ⚠️ Legal Disclaimer
 
-## License
+**VulnScanner is for authorized security testing only.**
 
-MIT. See `LICENSE` for details.
+Only use this tool on systems you own or have explicit written permission to test. Unauthorized scanning may be illegal. The tool includes an authorization confirmation prompt before every scan.
+
+---
+
+## 🔧 Extending
+
+### Add a new report format
+
+Create `scanner/report_json.py` and implement:
+
+```python
+def generate_json(result: ScanResult, output_path: str) -> str:
+    ...
+```
+
+### Use as a library
+
+```python
+from scanner.core import VulnScanner
+from scanner.report_html import generate_html
+
+scanner = VulnScanner(api_key="optional")
+result = scanner.scan("192.168.1.1", ports="22,80,443")
+generate_html(result, "report.html")
+```
+
+---
+
+## 📚 References
+
+- [NVD API Documentation](https://nvd.nist.gov/developers/vulnerabilities)
+- [MITRE CVE](https://cve.mitre.org/)
+- [Nmap Reference Guide](https://nmap.org/book/man.html)
+- [python-nmap](https://xael.org/pages/python-nmap-en.html)
+
+---
+
+## 📄 License
+
+MIT — see [LICENSE](LICENSE) for details.
