@@ -18,8 +18,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/M4H0R4G4/Vulnerability-Scanner-Personalizado"
-Repository = "https://github.com/M4H0R4G4/Vulnerability-Scanner-Personalizado"
+Homepage = "https://github.com/M4H0R4G4/vulnscanner"
+Repository = "https://github.com/M4H0R4G4/vulnscanner"
 
 [project.scripts]
 vulnscan = "main:main"
