@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vuln-scanner-personalizado"
+version = "1.0.0"
+description = "Personal vulnerability scanner with Nmap service detection, NVD CVE lookup, and HTML/PDF reports."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+authors = [{ name = "M4H0R4G4" }]
+keywords = ["security", "nmap", "cve", "nvd", "vulnerability-scanner"]
+dependencies = [
+    "python-nmap>=0.7.1",
+    "requests>=2.31.0",
+    "reportlab>=4.0.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/M4H0R4G4/Vulnerability-Scanner-Personalizado"
+Repository = "https://github.com/M4H0R4G4/Vulnerability-Scanner-Personalizado"
+
+[project.scripts]
+vulnscan = "main:main"
+
+[tool.setuptools]
+py-modules = ["main"]
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["scanner*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
