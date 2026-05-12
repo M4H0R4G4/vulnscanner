@@ -6,7 +6,7 @@ setup(
     version="1.0.0",
     description="Personal vulnerability scanner with CVE lookup and HTML/PDF reports",
     author="M4H0R4G4",
-    url="https://github.com/M4H0R4G4/Vulnerability-Scanner-Personalizado",
+    url="https://github.com/M4H0R4G4/vulnscanner",
     packages=find_packages(include=["scanner", "scanner.*"]),
     py_modules=["main"],
     python_requires=">=3.10",
