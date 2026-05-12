@@ -134,7 +134,7 @@ Expected result:
 ## 🗂️ Project Structure
 
 ```text
-Vulnerability-Scanner-Personalizado/
+vulnscanner/
 ├── main.py                    # CLI entrypoint
 ├── setup.py                   # Package installation config
 ├── pyproject.toml             # Modern build config
